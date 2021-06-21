@@ -93,8 +93,8 @@ mail *mails;
 query *queries;
 
 bool people[560]; // 560 whether a person has been added
-int parent[600];
-int size[600];
+int parent[560]; // can reuse any other array (don't have to be clear) to save memory usage
+int size[560]; // can reuse any other array (don't have to be clear) to save memory usage
 int ng, lg;
 int ans_djs[2];
 
@@ -151,8 +151,8 @@ void makeSet(int i, int j) {
         ng++;
         if (lg < 2) lg = 2;
 
-		used_djs[cnt_djs++] = i;
-		used_djs[cnt_djs++] = j;
+	used_djs[cnt_djs++] = i;
+	used_djs[cnt_djs++] = j;
 
     } else if (!people[i]) {
 
@@ -162,7 +162,7 @@ void makeSet(int i, int j) {
 
         if (lg < size[parent[i]]) lg = size[parent[i]];
 
-		used_djs[cnt_djs++] = i;
+	used_djs[cnt_djs++] = i;
 
     } else if (!people[j]) {
 
@@ -170,7 +170,7 @@ void makeSet(int i, int j) {
         size[parent[j]]++;
         people[j] = true;
 
-		used_djs[cnt_djs++] = j;
+	used_djs[cnt_djs++] = j;
         
         if (lg < size[parent[j]]) lg = size[parent[j]];
 
@@ -182,12 +182,8 @@ void makeSet(int i, int j) {
 }
 
 void clear() {
-	for (int i = 0; i < cnt_djs; i++) {
-		int p = used_djs[i];
-		people[p] = 0;
-		parent[p] = 0;
-		size[p] = 0;
-	}
+    for (int i = 0; i < cnt_djs; i++)
+	people[used_djs[i]] = 0;
 }
 
 
